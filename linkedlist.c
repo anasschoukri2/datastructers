@@ -51,12 +51,42 @@ node* insertinorder(node* a, node* linkedlist)
     rear->next = a;
     return linkedlist;
 }
+void Delete(int id, node** linkedlist)
+{
+    if (*linkedlist == NULL)
+        return;
+    while ((*linkedlist) != NULL && (*linkedlist)->data == id) {
+        *linkedlist = (*linkedlist)->next;
+    }
+    node* walker = *linkedlist;
+    node* rear = *linkedlist;
+    while (walker != NULL) {
+        if (walker->data == id) {
+            rear->next = walker->next;
+        }
+        rear = walker;
+        walker = walker->next;
+    }
+}
+void search(int id, node* linkedlist)
+{
+    node* walker = linkedlist;
+    while (walker != NULL) {
+        if (walker->data == id) {
+            printf("Found!\n");
+            return;
+        }
+        walker = walker->next;
+    }
+    printf("NOT Found!\n");
+}
 void printList(node* Node)
 {
     while (Node != NULL) {
         printf("%d ", Node->data);
         Node = Node->next;
     }
+    printf("\n");
 }
 int main()
 {
@@ -64,8 +94,8 @@ int main()
     linkedlist = NULL;
     node* a = (node*)malloc(sizeof(node));
     a->next = NULL;
-    a->data = 1;
-    linkedlist = insertback(a, linkedlist);
+    a->data = 100;
+    linkedlist = insertinorder(a, linkedlist);
     a = (node*)malloc(sizeof(node));
     a->next = NULL;
     a->data = 52;
@@ -74,6 +104,20 @@ int main()
     a->next = NULL;
     a->data = 9;
     linkedlist = insertinorder(a, linkedlist);
+    a = (node*)malloc(sizeof(node));
+    a->next = NULL;
+    a->data = 1;
+    linkedlist = insertinorder(a, linkedlist);
+    a = (node*)malloc(sizeof(node));
+    a->next = NULL;
+    a->data = 8888;
+    linkedlist = insertinorder(a, linkedlist);
+    search(1, linkedlist);
+    printList(linkedlist);
+    Delete(1, &linkedlist);
+    Delete(9, &linkedlist);
+    Delete(8888, &linkedlist);
+    search(1, linkedlist);
     printList(linkedlist);
     return 0;
 }
