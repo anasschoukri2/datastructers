@@ -21,20 +21,22 @@ node * search(node * root, int x){
     return NULL;
 }
 node * Delete(node * root,int key){
-      if(root==NULL)return NULL;
-      else if(root->data>key)root->left=Delete(root->left, key);
-      if(root->data<key)root->right=Delete(root->right, key);
-      else {
-          if(root->left==NULL)return root->right;
-          if(root->right==NULL)return root->left;
-          node *y=root->right;
-          while(y->left!=NULL)y=y->left;
-          y->left=root->left;
-          y->right=root->right;
-          root=y;
-          root->right=Delete(root->right, y->data);
-      }
-      return root;
+            if (root == NULL)
+                return NULL;
+            if (root->val > key)
+                root->left = deleteNode(root->left, key);
+            else if (root->val < key)
+                root->right = deleteNode(root->right, key);
+            else {
+                if (root->left == NULL)return root->right;
+                if (root->right == NULL)return root->left;
+                TreeNode* y = root->right;
+                while (y->left != NULL)
+                    y = y->left;
+                root->val = y->val;
+                root->right = deleteNode(root->right, y->val);
+            }
+            return root;
 }
 int main(void) {
   node* root;
